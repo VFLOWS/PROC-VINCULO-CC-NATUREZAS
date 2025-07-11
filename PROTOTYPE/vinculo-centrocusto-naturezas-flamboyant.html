@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Padrão - Flamboyant</title>
+    
+    <!-- CSS do Fluig -->
+    <link type="text/css" rel="stylesheet" href="https://portal.flamboyant.com.br/style-guide/css/fluig-style-guide.min.css" />
+    
+    <!-- CSS Customizado -->
+    <!-- JavaScripts do Fluig -->
+    <script type="text/javascript" src="https://portal.flamboyant.com.br/portal/resources/js/jquery/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://portal.flamboyant.com.br/style-guide/css/fluig-style-guide-select.min.css" />  
+    <script type="text/javascript" src="https://portal.flamboyant.com.br/portal/resources/js/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://portal.flamboyant.com.br/portal/resources/js/mustache/mustache-min.js"></script>
+    <script type="text/javascript" src="https://portal.flamboyant.com.br/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://portal.flamboyant.com.br/webdesk/vcXMLRPC.js"></script>
+    <script type="text/javascript" src="https://fluig.totvs.com.br/ecm_resources/resources/assets/forms/forms.js?v=1.8.2-250527"></script>    
+    <script type="text/javascript" src="https://portal.flamboyant.com.br/style-guide/js/fluig-style-guide-select.min.js"></script>
+    
+    <style>
+        /* Estilos adicionais podem ser adicionados aqui */
+        .logo-flamboyant {
+            max-height: 80px;
+            margin: 10px 0;
+        }
+        
+        .titulo-pagina {
+            color: #333;
+            margin: 15px 0;
+        }
+        
+        .panel-flamboyant {
+            margin-top: 20px;
+        }
+        
+        .btn-flamboyant {
+            background-color: #f86161;
+            border-color: #e64141;
+            color: white;
+        }
+        
+        .btn-flamboyant:hover, .btn-flamboyant:focus {
+            background-color: #e64141;
+            border-color: #d43131;
+            color: white;
+        }
+        
+        .footer-flamboyant {
+            margin-top: 30px;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+        }
+
+        :root {
+        --primary-color-flamboyant: #f86161;
+        --secondary-color-flamboyant: #e64141;
+
+        --approval: grey;
+
+        --orange-color-flamboyant: rgb(246, 168, 80);
+        --yellow-color-flamboyant: rgb(255, 221, 80);
+        --pear-green-color-flamboyant: rgb(150, 192, 58);
+        --green-color-flamboyant: rgb(31, 162, 46);
+        --azure-red-color-flamboyant: rgb(248, 97, 97);
+        --midnight-red-color-flamboyant: rgb(230, 65, 65);
+        
+        --purple-color: purple;
+        }
+
+        .panel-primary > .panel-heading > .panel-title > .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-primary > .panel-heading > .panel-title > .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-primary > .panel-heading > .panel-title > .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-primary > .panel-heading > .panel-title > .collapse-icon:before {
+        background-color: white !important;
+        }
+
+        /** Aproval Color */
+        .panel-approval {
+        border-top-width: 0px !important;
+        border-color: var(--approval) !important;
+        }
+
+        .panel-approval >.panel-heading {
+        color: #fff;
+        border-color: var(--approval);
+        background-color: var(--approval);
+        }
+
+        .panel-approval .panel-heading .collapse-icon.up:after {
+        color: black !important;
+        }
+
+        .panel-approval .panel-heading .collapse-icon:after {
+        color: black !important;
+        }
+
+        .panel-approval .panel-heading .collapse-icon.up:before {
+        background-color: black !important;
+        }
+
+        .panel-approval .panel-heading .collapse-icon:before {
+        background-color: black !important;
+        }
+
+        /** Orange Color */
+        .panel-flamboyant-orange {
+        border-top-width: 0px !important;
+        border-color: var(--orange-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant-orange >.panel-heading {
+        color: #fff;
+        border-color: var(--orange-color-flamboyant);
+        background-color: var(--orange-color-flamboyant);
+        }
+
+        .panel-flamboyant-orange .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-orange .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-orange .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-flamboyant-orange .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+
+        /** Yellow Color */
+        .panel-flamboyant-yellow {
+        border-top-width: 0px !important;
+        border-color: var(--yellow-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant-yellow >.panel-heading {
+        color: black;
+        border-color: var(--yellow-color-flamboyant);
+        background-color: var(--yellow-color-flamboyant);
+        }
+
+        .panel-flamboyant-yellow .panel-heading .collapse-icon.up:after {
+        color: black !important;
+        }
+
+        .panel-flamboyant-yellow .panel-heading .collapse-icon:after {
+        color: black !important;
+        }
+
+        .panel-flamboyant-yellow .panel-heading .collapse-icon.up:before {
+        background-color: black !important;
+        }
+
+        .panel-flamboyant-yellow .panel-heading .collapse-icon:before {
+        background-color: black !important;
+        }
+
+        /** Pear Green Color */
+        .panel-flamboyant-pear-green {
+        border-top-width: 0px !important;
+        border-color: var(--pear-green-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant-pear-green >.panel-heading {
+        color: #fff;
+        border-color: var(--pear-green-color-flamboyant);
+        background-color: var(--pear-green-color-flamboyant);
+        }
+
+        .panel-flamboyant-pear-green .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-pear-green .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-pear-green .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-flamboyant-pear-green .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+
+        /** Green Color */
+        .panel-flamboyant-green {
+        border-top-width: 0px !important;
+        border-color: var(--green-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant-green >.panel-heading {
+        color: #fff;
+        border-color: var(--green-color-flamboyant);
+        background-color: var(--green-color-flamboyant);
+        }
+
+        .panel-flamboyant-green .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-green .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-green .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-flamboyant-green .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+
+        /** Azure Blue Color */
+        .panel-flamboyant-azure-blue {
+        border-top-width: 0px !important;
+        border-color: var(--azure-red-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant-azure-blue >.panel-heading {
+        color: #fff;
+        border-color: var(--azure-red-color-flamboyant);
+        background-color: var(--azure-red-color-flamboyant);
+        }
+
+        .panel-flamboyant-azure-blue .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-azure-blue .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-azure-blue .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-flamboyant-azure-blue .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+
+        /** Midnight Blue Color */
+        .panel-flamboyant-midnight-blue {
+        border-top-width: 0px !important;
+        border-color: var(--midnight-red-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant-midnight-blue >.panel-heading {
+        color: #fff;
+        border-color: var(--midnight-red-color-flamboyant);
+        background-color: var(--midnight-red-color-flamboyant);
+        }
+
+        .panel-flamboyant-midnight-blue .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-midnight-blue .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant-midnight-blue .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-flamboyant-midnight-blue .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+
+
+        /** Primary Color */
+        .panel-flamboyant {
+        border-top-width: 0px !important;
+        border-color: var(--primary-color-flamboyant) !important;
+        }
+
+        .panel-flamboyant >.panel-heading {
+        color: #fff;
+        border-color: var(--primary-color-flamboyant);
+        background-color: var(--primary-color-flamboyant);
+        }
+
+        .panel-flamboyant .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-flamboyant .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-flamboyant .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+
+        /** Custom Color - Purple */
+        .panel-purple {
+        border-top-width: 0px !important;
+        border-color: var(--purple-color) !important;
+        }
+
+        .panel-purple >.panel-heading {
+        color: #fff;
+        border-color: var(--purple-color);
+        background-color: var(--purple-color);
+        }
+
+        .panel-purple .panel-heading .collapse-icon.up:after {
+        color: white !important;
+        }
+
+        .panel-purple .panel-heading .collapse-icon:after {
+        color: white !important;
+        }
+
+        .panel-purple .panel-heading .collapse-icon.up:before {
+        background-color: white !important;
+        }
+
+        .panel-purple .panel-heading .collapse-icon:before {
+        background-color: white !important;
+        }
+        .has-error {
+  color: #a94442!important;
+}
+
+.has-error .select2-fluigicon-zoom {
+  border-color: #f64445 !important;
+  background-color: #f64445 !important;
+}
+
+@media (min-width: 768px) {
+  .fieldset {
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 1px;
+    border-color: #ddd;
+    border-radius: 4px 4px 0 0;
+    background-color: #fff;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.anchorDefault {
+  color: #0054fd !important;
+}
+
+.fieldset-border {
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow: 0px 0px 0px 0px #000;
+  box-shadow: 0px 0px 0px 0px #000;
+}
+
+.fieldset-border .legend-border {
+  font-size: 1.2em !important;
+  text-align: left !important;
+  width: auto;
+  padding: 0 10px;
+  border-bottom: none;
+}
+
+.fieldset {
+  position: relative;
+  margin: 0 -15px 15px;
+  padding: 45px 15px 15px;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #e5e5e5 #eee #eee;
+  -webkit-box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
+}
+
+.fieldset:after {
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  content: 'Item';
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #959595;
+}
+
+label.disabled:before {
+  background-color: #b8b8b8 !important;
+}
+
+.bpm-mobile-trash-column {
+  width: 71px;
+}
+
+.form-inline {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.form-inline .control-label {
+  margin-right: 15px;
+}
+
+.form-inline .form-control {
+  width: auto;
+}
+
+.marginTop {
+  margin-top: 26px;
+}
+
+.marginLeft {
+  margin-left: 20px;
+}
+
+.marginBottom {
+  margin-bottom: 10px;
+}
+
+.larguraTotal {
+  width: 90% !important;
+}
+
+.labelWidth {
+  width: 116px;
+}
+
+.primary {
+  border-color:#c20014 !important;
+}
+
+.heading {
+  background-color:#c20014 !important;
+}
+
+.panel-info {
+  border-color:#c20014 !important;
+}
+
+.header-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+}
+
+.titulo-pagina {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+    </style>
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<div class="container-fluid" id="formulario">
+            <!-- Cabeçalho -->
+                <div class="panel panel-primary primary">
+                    <div class="panel-body">
+                        <div class="header-container">
+                            <img id="imagemLogo" 
+                                src="https://portal.flamboyant.com.br/portal/api/servlet/image/01/custom/logo_image.png" 
+                                class="logo-flamboyant" 
+                                alt="Logo Flamboyant">
+                            <h1 class="titulo-pagina">
+                                <b id="titulo">Vinculo de Centro de Custo e Natureza</b>
+                            </h1>                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary primary" id="painelDadosSolicitante">
+                    <div class="panel-heading heading">
+                        <h4 class="panel-title">
+                            <a class="collapse-icon" data-toggle="collapse" href="#collapseDadosSolicitante">
+                                <b>Dados do Solicitante</b>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseDadosSolicitante" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row form-group">   
+                                <div class="col-md-4 col-xs-12">
+                                    <label for="inputNome"><b>Coligada</b></label>
+                                    <input class="form-control" type="text" id="zoomColigada" name="zoomColigada" readonly value="CONDOMINIO FLAMBOYANT SHOPPING CENTER"/>
+                                </div>
+                                <div class="col-md-2 col-xs-12">
+                                    <label for="filial">Filial</label>
+                                    <input type="text" class="form-control" id="filial" name="filial" readonly value="CONDOMINIO FLAMBOYANT SHOPPING CENTER">
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label for="inputNome"><b>Nome do Solicitante</b></label>
+                                    <input class="form-control" id="inputNome" name="inputNome" readonly>
+                                </div>
+                                <div class="col-md-2 col-xs-12">
+                                    <label for="inputData"><b>Data</b></label>
+                                    <input class="form-control" id="inputData" name="inputData" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Painel de Dados Principais -->
+                <div class="panel panel-primary primary" id="painelDadosPrincipais">
+                    <div class="panel-heading heading">
+                        <h4 class="panel-title">
+                            <a class="collapse-icon" data-toggle="collapse" href="#collapseDadosPrincipais">
+                                <b>Dados da Solicitação</b>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseDadosPrincipais" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row form-group">
+                                <div class="col-md-8">
+                                    <label for="zoomCentroCusto">Selecione o Centro de Custo para Vínculo</label>
+                                    <input class="form-control" type="zoom" id="zoomCentroCusto" name="zoomCentroCusto" value="TECNOLOGIA DA INFORMACAO (TI)"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="codigoCentroCusto">Código do Centro de Custo</label>
+                                    <input type="text" class="form-control" id="codigoCentroCusto" name="codigoCentroCusto" readonly value="20.02.007">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <fieldset class="fieldset-border">
+                                        <legend class="legend-border">Lista de Naturezas</legend>
+
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-success" id="btnAdicionarNatureza">
+                                                <span class="fluigicon fluigicon-plus"></span> Adicionar Natureza
+                                            </button>
+                                        </div>
+                                        <br/>
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-hover" id="tabelaNaturezas">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-1">#</th>
+                                                            <th class="col-md-2">Codigo</th>
+                                                            <th class="col-md-10">Descrição</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="observacoes">Observações:</label>
+                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Painel de Aprovacao Gestor Imediato -->
+                <div class="panel panel-primary primary panel-flamboyant" id="painelAprovacaoGestorImediato">
+                    <div class="panel-heading heading">
+                        <h4 class="panel-title">
+                            <a class="collapse-icon" data-toggle="collapse" href="#collapseAprovacaoGestorImediato">
+                                <b>Aprovação Gestor Imediato</b>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseAprovacaoGestorImediato" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row form-group">   
+                                <div class="col-md-8 col-xs-12">
+                                    <label for="inputNomeAprovador"><b>Nome do Aprovador</b></label>
+                                    <input class="form-control" id="inputNomeAprovador" name="inputNomeAprovador" readonly>
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label for="inputDataAprovacao"><b>Data da Aprovação</b></label>
+                                    <input class="form-control" id="inputDataAprovacao" name="inputDataAprovacao" readonly>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="observacoes">Observações:</label>
+                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Painel de Definições do Centro de Custo -->
+                <div class="panel panel-primary primary panel-flamboyant" id="painelDefinicoesCentroCusto">
+                    <div class="panel-heading heading">
+                        <h4 class="panel-title">
+                            <a class="collapse-icon" data-toggle="collapse" href="#collapseDefinicoesCentroCusto">
+                                <b>Definições do Centro de Custo</b>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseDefinicoesCentroCusto" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row form-group">   
+                                <div class="col-md-8 col-xs-12">
+                                    <label for="inputNomeExecutor"><b>Nome do Executor</b></label>
+                                    <input class="form-control" id="inputNomeExecutor" name="inputNomeExecutor" readonly>
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label for="inputDataExecutor"><b>Data do Executor</b></label>
+                                    <input class="form-control" id="inputDataExecutor" name="inputDataExecutor" readonly>
+                                </div>
+                            </div>
+                            <div class="row form-group">    
+                                <div class="col-md-6">
+                                    <label for="selectOpcao">Selecione uma opção:</label>
+                                    <select class="form-control" id="selectOpcao" name="selectOpcao">
+                                        <option value="">Selecione..</option>
+                                        <option value="1">Aprovado</option>
+                                        <option value="2">Reprovado</option>
+                                        <option value="3">Corrigir</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="observacoesJustificativa">Observações/Justificativa:</label>
+                                    <textarea class="form-control" id="observacoesJustificativa" name="observacoesJustificativa" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <fieldset class="fieldset-border">
+                                        <legend class="legend-border">Lista de Definições de Naturezas</legend>
+
+                                        <div class="row form-group">
+                                            <div class="col-md-8">
+                                                <label for="centroCustoSelecionado">Centro de Custo para Vínculo</label>
+                                                <input class="form-control" type="text" id="centroCustoSelecionado" name="centroCustoSelecionado" readonly value="TECNOLOGIA DA INFORMACAO (TI)">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="codigoCentroCustoSelecionado">Código do Centro de Custo</label>
+                                                <input type="text" class="form-control" id="codigoCentroCustoSelecionado" name="codigoCentroCustoSelecionado" readonly value="20.02.007">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-success" id="btnAdicionarDefinicaoNatureza">
+                                                    <span class="fluigicon fluigicon-plus"></span> Adicionar Definição de Natureza
+                                                </button>
+                                            </div>    
+                                        </div>
+                                        <br/>
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover" id="tabelaDefinicoesNaturezas">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="col-md-1">#</th>
+                                                                <th class="col-md-2">Código</th>
+                                                                <th class="col-md-7">Descrição</th>
+                                                                <th class="col-md-2">Status</th>
+                                                                <th class="col-md-1">Ações</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>123456</td>
+                                                                <td>Descrição da Natureza</td>
+                                                                <td><select class="form-control" name="definicaoNaturezaStatus[]">
+                                                                    <option value=""></option>
+                                                                    <option value="Aprovado">Aprovado</option>
+                                                                    <option value="Reprovado">Reprovado</option>
+                                                                </select></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>123456</td>
+                                                                <td>Descrição da Natureza 2</td>
+                                                                <td><select class="form-control" name="definicaoNaturezaStatus[]">
+                                                                    <option value=""></option>
+                                                                    <option value="Aprovado">Aprovado</option>
+                                                                    <option value="Reprovado">Reprovado</option>
+                                                                </select></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rodapé com botões de ação -->
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-default">
+                            <span class="fluigicon fluigicon-remove"></span> Cancelar
+                        </button>
+                        <button type="button" class="btn btn-flamboyant">
+                            <span class="fluigicon fluigicon-save"></span> Salvar Rascunho
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="fluigicon fluigicon-check"></span> Enviar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="footer-flamboyant">
+                    <p> 2025 Flamboyant - Todos os direitos reservados</p>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Scripts adicionais podem ser incluídos aqui -->
+    <script type="text/javascript">
+        // Inicialização de componentes
+        $(document).ready(function() {
+            // Formata e define a data atual
+            var dataAtual = new Date();
+            var dia = String(dataAtual.getDate()).padStart(2, '0');
+            var mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+            var ano = dataAtual.getFullYear();
+            var horas = String(dataAtual.getHours()).padStart(2, '0');
+            var minutos = String(dataAtual.getMinutes()).padStart(2, '0');
+            var dataHoraFormatada = dia + '/' + mes + '/' + ano + ' ' + horas + ':' + minutos;
+            $('#inputData').val(dataHoraFormatada);
+            $('#inputDataAprovacao').val(dataHoraFormatada);
+            $('#inputDataExecutor').val(dataHoraFormatada);
+            
+            // Define o nome do usuário logado
+            $('#inputNome').val("Iron Claudio da Silva Filho");
+            $('#inputNomeAprovador').val("Iron Claudio da Silva Filho");
+            $('#inputNomeExecutor').val("Iron Claudio da Silva Filho");
+            
+            // Inicializa os tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            // Adiciona uma nova linha na tabela de naturezas
+            $('#btnAdicionarNatureza').click(function() {
+                var novaLinha = $('<tr>');
+                var contadorLinhas = $('#tabelaNaturezas tbody tr').length + 1;
+                
+                // Célula do contador
+                var celulaContador = $('<td>').text(contadorLinhas);
+                
+                // Célula do código
+                var celulaCodigo = $('<td>').append(
+                    $('<input>').attr({
+                        'type': 'text',
+                        'class': 'form-control',
+                        'name': 'naturezaCodigo[]',
+                        'required': 'required',
+                        'readonly': 'readonly'
+                    })
+                );
+                
+                // Célula da descrição
+                var celulaDescricao = $('<td>').append(
+                    $('<input>').attr({
+                        'type': 'text',
+                        'class': 'form-control',
+                        'name': 'naturezaDescricao[]',
+                        'required': 'required'
+                    })
+                );
+                
+                // Célula de ações
+                var celulaAcoes = $('<td>').append(
+                    $('<button>').attr({
+                        'type': 'button',
+                        'class': 'btn btn-danger btn-sm btn-remover',
+                        'title': 'Remover natureza'
+                    }).append(
+                        $('<span>').addClass('fluigicon fluigicon-remove')
+                    ).click(function() {
+                        $(this).closest('tr').remove();
+                        // Atualiza os números das linhas
+                        atualizarNumeracaoLinhas();
+                    })
+                );
+                
+                // Monta a linha
+                novaLinha.append(celulaContador, celulaCodigo, celulaDescricao, celulaAcoes);
+                
+                // Adiciona a linha à tabela
+                $('#tabelaNaturezas tbody').append(novaLinha);
+                
+                // Foca no campo de código da nova linha
+                novaLinha.find('input[name^="naturezaCodigo"]').focus();
+            });
+
+            // Adiciona uma nova linha na tabela de naturezas
+            $('#btnAdicionarDefinicaoNatureza').click(function() {
+                var novaLinha = $('<tr>');
+                var contadorLinhas = $('#tabelaDefinicoesNaturezas tbody tr').length + 1;
+                
+                // Célula do contador
+                var celulaContador = $('<td>').text(contadorLinhas);
+                
+                // Célula do código
+                var celulaCodigo = $('<td>').append(
+                    $('<input>').attr({
+                        'type': 'text',
+                        'class': 'form-control',
+                        'name': 'definicaoNaturezaCodigo[]',
+                        'required': 'required',
+                        'readonly': 'readonly'
+                    })
+                );
+                
+                // Célula da descrição
+                var celulaDescricao = $('<td>').append(
+                    $('<input>').attr({
+                        'type': 'text',
+                        'class': 'form-control',
+                        'name': 'definicaoNaturezaDescricao[]',
+                        'required': 'required'
+                    })
+                );
+                
+                // Célula de status
+                var celulaStatus = $('<td>').append(
+                    $('<select>').attr({
+                        'class': 'form-control',
+                        'name': 'definicaoNaturezaStatus[]',
+                        'disabled': 'disabled'
+                    }).append(
+                        $('<option>', {
+                            'value': 'Aprovado',
+                            'selected': 'selected'
+                        }).text('Aprovado')
+                    )
+                );
+                
+                // Célula de ações
+                var celulaAcoes = $('<td>').append(
+                    $('<button>').attr({
+                        'type': 'button',
+                        'class': 'btn btn-danger btn-sm btn-remover',
+                        'title': 'Remover natureza'
+                    }).append(
+                        $('<span>').addClass('fluigicon fluigicon-remove')
+                    ).click(function() {
+                        $(this).closest('tr').remove();
+                        // Atualiza os números das linhas
+                        atualizarNumeracaoLinhasDefinicoesNaturezas();
+                    })
+                );
+                
+                // Monta a linha
+                novaLinha.append(celulaContador, celulaCodigo, celulaDescricao, celulaStatus, celulaAcoes);
+                
+                // Adiciona a linha à tabela
+                $('#tabelaDefinicoesNaturezas tbody').append(novaLinha);
+                
+                // Foca no campo de código da nova linha
+                novaLinha.find('input[name^="definicaoNaturezaCodigo"]').focus();
+            });
+            
+            // Função para atualizar a numeração das linhas
+            function atualizarNumeracaoLinhas() {
+                $('#tabelaNaturezas tbody tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+            }
+
+            // Função para atualizar a numeração das linhas
+            function atualizarNumeracaoLinhasDefinicoesNaturezas() {
+                $('#tabelaDefinicoesNaturezas tbody tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+            }
+            
+        });
+    </script>
+</body>
+</html>
